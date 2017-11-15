@@ -22,7 +22,7 @@
 </div>
 
 {% if theme.footer.powered %}
-  <div class="powered-by">{#
+  <!--<div class="powered-by">{#
   #}{{ __('footer.powered', '<a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>') }}{#
 #}</div>
 {% endif %}
@@ -37,7 +37,7 @@
   #}<a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">{#
     #}NexT.{{ theme.scheme }}{#
   #}</a>{% if theme.footer.theme.version %} v{{ theme.version }}{% endif %}{#
-#}</div>
+#}</div>-->
 {% endif %}
 
 {% if theme.footer.custom_text %}
