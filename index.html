@@ -82,7 +82,7 @@
 <meta name="description" content="To be or not to be that&apos;s a question">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Walker&#39;s blogs">
-<meta property="og:url" content="https://wrecksoul.github.io/index.html">
+<meta property="og:url" content="https://wrecksoul.github.io/blogs/index.html">
 <meta property="og:site_name" content="Walker&#39;s blogs">
 <meta property="og:description" content="To be or not to be that&apos;s a question">
 <meta property="og:locale" content="zh-Hans">
@@ -118,7 +118,7 @@
 
 
 
-  <link rel="canonical" href="https://wrecksoul.github.io/"/>
+  <link rel="canonical" href="https://wrecksoul.github.io/blogs/"/>
 
 
 
@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/">
+    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Walker">
@@ -354,47 +354,21 @@
 
       
         
-          
-            <p>如果你在写博客的时候有以下困扰，可以试着自己搭建一个个人博客：</p>
+          <p>如果你在写博客的时候有以下困扰，可以试着自己搭建一个个人博客：</p>
 <ul>
 <li>各个网站的博客系统需要审核才能发布，有延迟，而且时间不一定；</li>
 <li>博客的样子不够个性；</li>
 <li>博客的栏目不是你想要的；</li>
 <li>博客中有各种无关广告和弹窗。</li>
 </ul>
-<p>由于我是一个后端开发人员，对前端技术并不了解，在搭建博客的过程中难免有许多不足之处，但是如果你也是后台开发并且对前端技术并不熟悉的情况下，我倒是觉得看这篇博文可能会更有感觉一些，我会从后台开发的角度解释一些步骤的原因，从而方便你具体问题具体分析。</p>
-<h1 id="知识普及"><a href="#知识普及" class="headerlink" title="知识普及"></a>知识普及</h1><h2 id="个人博客"><a href="#个人博客" class="headerlink" title="个人博客"></a>个人博客</h2><p>如果你在csdn之类的网站上写过博客，那你在构建自己的个人博客过程中可能会产生一大堆的疑问——不知道我在干什么，所以在这之前我打算花一点文字来描述一下搭建个人博客的大体流程和大致原理。</p>
-<p>一般来说，一个网页，不管它提供的功能多还是少，只要放在互联网上人人都能访问，那么它就需要寄托在一个服务器上，就像淘宝、百度、新浪都有自己的服务器一样。当你在浏览器里面敲下他们网站的地址的时候，其实你访问的是互联网另一端的一台电脑，并且它给了你一个网页作为反馈。</p>
-<p>对于像csdn这种博客管理系统来说，当我们注册了账号之后就拥有了自己的一个博客网址，目录、标签等等都是csdn定制好的。我们可以在专门的编辑页面提交文章，然后等csdn审核通过后就可以在互联网上看到我们自己的博客了。整个流程简单易行，总体来说还是比较方便的，但是当我们需要一些更加个性的样式的时候可能这些就满足不了我们的需求了。</p>
-<p>对于基于github的pages功能来搭建博客，总体流程比使用一个现成的博客管理系统要麻烦一些。</p>
-<p>一篇博文从我们编辑的.md文件到最后上传到我们的博客页面上，大体上分几步来完成：</p>
-<ol>
-<li>编辑<code>.md</code>文件，在里面写你的博文</li>
-<li><code>.md</code>文件被转换成<code>html</code>（这是我们使用的是hexo而不是github原生支持的jekyll，hexo根据我们的<code>.md</code>文件生成对应样式的<code>html</code>片段，并把它嵌入到hexo自定义的主题模板中去）。</li>
-<li>生成的完整的静态页面（可能是一堆）通过git上传到github你的repository中去。</li>
-<li>通过浏览器访问。</li>
-</ol>
-<p><em>注意，在上面的几个步骤中，第一步和最后一步肯定是人工完成的（废话），第二、三步由我们发出一行命令行指令后hexo替我们完成。</em></p>
-<h2 id="编辑环境说明"><a href="#编辑环境说明" class="headerlink" title="编辑环境说明"></a>编辑环境说明</h2><p>根据上面的说明，可能你已经看出来了，我们的博文开始是<code>.md</code>文件最后上传的<code>html</code>文件，这里是有一个转换过程的，同时，这个跟java一样是有编译前的<code>.java</code>文件和最后用于执行的<code>.class</code>文件之分的，而最后有用的是html文件，但是源文件（<code>.md</code>)文件以及它所依赖的环境我们也是不想丢弃的，除非你只发一次博文并且再也不修改了。</p>
-<p>所以，在使用github托管我们的文件的时候我们希望保持两部分内容，而这两部分内容，我们敲好可以使用git的分支来分别保持。</p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><p>由于我个人的一些原因，我要把源码也上传到github上，所以才会使用两个分支分别保持，这是因为我可能会使用不同的计算机来写博文，而我又不想把<code>源码环境</code>拿来拿去，所以我选择托管到github上，当然你也可以选择托管到码云之类的其他代码托管（因为貌似他们提供了免费的私人代码托管服务）或者使用百度云、U盘来保持你写博客环境的可移动性，或者你根本不在乎这些，那你就可以具体问题具体分析一下了。</p>
-<h1 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h1><h2 id="环境说明"><a href="#环境说明" class="headerlink" title="环境说明"></a>环境说明</h2><p>我是在window环境搭建，当然搭建和写博客本身跟平台是无关的，但是搭建或者使用过程中软件版本会有影响，比如Git、nodejs都对不同平台提供了不同版本并且在设置会有写不同。</p>
-<h2 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h2><ol>
-<li>一台电脑安装了git的pc</li>
-<li>一个github账号</li>
-</ol>
-<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><p>有了github账号并且pc上正确安装了git（我安装的Git for windows）之后，由于git需要往github上提交代码，如果每次都需要我们输入密码认证的话是很麻烦的，所以我们需要给本地的git设置ssh登录方式。</p>
-<h3 id="配置git以ssh方式登录github"><a href="#配置git以ssh方式登录github" class="headerlink" title="配置git以ssh方式登录github"></a>配置git以ssh方式登录github</h3><p>这里我只是给出简单流程，如果有疑问可以自行搜索。</p>
-<p>一、生成ssh私钥和公钥</p>
-<p>随便打开一个文件夹右键-》Git Bash here，<em>其中<code>xxx@yy.com</code>替换成你github注册的邮箱地址</em>：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ cd ~</span><br><span class="line">$ ssh-keygen -t rsa -C &quot;xxx@yy.com&quot;</span><br><span class="line">Generating public/private rsa key pair.</span><br><span class="line">Enter file in which to save the key (/c/Users/xxxx_000/.ssh/id_rsa):#这里使用默认路径，留空，直接回城</span><br><span class="line">Enter passphrase (empty for no passphrase):   #输入密码（可以为空）</span><br><span class="line">Enter same passphrase again:   #再次确认密码（可以为空）</span><br><span class="line">Your identification has been saved in /c/Users/xxxx_000/.ssh/id_rsa.   #生成的密钥</span><br><span class="line">Your public key has been saved in /c/Users/xxxx_000/.ssh/id_rsa.pub.  #生成的公钥</span><br><span class="line">The key fingerprint is:</span><br><span class="line">e3:51:33:xx:xx:xx:xx:xxx:61:28:83:e2:81 xxxxxx@yy.com</span><br></pre></td></tr></table></figure>
-<p>以上完成后就生成了私钥和公钥，他们存储在默认路径下：<code>C:\Users\你的用户名\.ssh\</code>下，其中id_rsa.pub是公钥。</p>
-<p>二、把公钥复制到github的<code>SSH keys</code>中<br>将公钥用文本编辑器打开复制里面的内容到github中去</p>
-<img src="/blogs/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github1.png" title="stepone">
-<img src="/blogs/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github2.png" title="steptwo">
-<p>三、配置git连接github时候的name和email<br>四、测试</p>
-<h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><h2 id="开始搭建"><a href="#开始搭建" class="headerlink" title="开始搭建"></a>开始搭建</h2>
-          
+<p>由于我是一个后端开发人员，对前端技术并不了解，在搭建博客的过程中难免有许多不足之处，但是如果你也是后台开发并且对前端技术并不熟悉的情况下，我倒是觉得看这篇博文可能会更有感觉一些，我会从后台开发的角度解释一些步骤的原因，从而方便你具体问题具体分析。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -441,7 +415,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/2017/11/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/11/14/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Walker">
