@@ -15,6 +15,7 @@ tags:
 - 博客中有各种无关广告和弹窗。
 
 由于我是一个后端开发人员，对前端技术并不了解，在搭建博客的过程中难免有许多不足之处，但是如果你也是后台开发并且对前端技术并不熟悉的情况下，我倒是觉得看这篇博文可能会更有感觉一些，我会从后台开发的角度解释一些步骤的原因，从而方便你具体问题具体分析。
+<!--more-->
 
 # 知识普及
 ## 个人博客
@@ -79,13 +80,104 @@ e3:51:33:xx:xx:xx:xx:xxx:61:28:83:e2:81 xxxxxx@yy.com
 二、把公钥复制到github的`SSH keys`中
 将公钥用文本编辑器打开复制里面的内容到github中去
 
-{% asset_img github1.png stepone %}
-{% asset_img github2.png steptwo %}
+![](/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github1.png)
+
+![](/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github2.png)
 
 三、配置git连接github时候的name和email
-四、测试
+```
+$ git config --global user.name "xxxxxx"
 
+$ git config --global user.email "xxxxxx@yy.com"
+```
+四、测试
+```
+$ ssh -T git@github.com
+#如果显示如下信息，说明配置正确了：
+Hi xxxxxx! You've successfully authenticated, but GitHub does not provide shell access.
+```
 
 ### 安装node.js
+[nodejs中文网](http://nodejs.cn/)
 
 ## 开始搭建
+
+### 第一步 建立github仓库
+新建一个github仓库（repository），这里可以分两种情况，这是我自己在搭建时候遇到的困惑，
+
+1. 用username.github.io命名仓库。例如我的就是`wrecksoul.github.io`
+2. 用一个任意的名字。例如我的就是blogs
+
+这两种都是可以的，但是各有各的坑，具体情况下后面的“具体说明”。
+
+新建的时候，只添加一个readme就可以了，.gitignore是不需要的，因为待会安装hexo，hexo自带。
+
+
+
+#### 具体说明
+1、
+github在博客这上面的设置是这样的，如果你的仓库使用`username.github.io`这种名称的话，那么就只能发布master分支作为博客静态页面
+那么：
+![](/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github3.png)
+这个地方的设置就会变灰，无法更改，只能是master分支。
+不过这个也不算什么缺点了，但是貌似如果你使用jekyll的话会有坑。用hexo应该是没有问题的。
+不过这个算是一个新手不知道的话会踩到的坑，比如我。
+2、
+最大的区别在于，如果你的博客使用`username.github.io`这个根url，这时候，就好像你设置servlet的拦截路径为 `/` 一样，所有请求都被它拦截了，某天你开发了一个开源项目，发布到github上面，你想给这个开源项目一个首页来介绍它，这就尴尬了。
+
+而如果你使用`username.github.io/blog`这个url（也就是你的github仓库叫做blog），那你还可以建立`username.github.io/blog1`、`username.github.io/blog2`等等。
+
+### 第二步 搭建hexo环境
+
+node.js有个官方支持的npm工具，可以方便的管理各种依赖module，类似于java的`maven/gradle`这种工具，不过它只用于管理依赖，说起来可能更像是centos的包管理工具`rpm/yum`
+
+不同的在于nodejs在包管理时，会为每个工程都下载一个依赖包在当前项目路径下，也就是说，如果你想在本机重新搭建一个hexo环境的话，需要重新从网上下载一个下来，而不是利用本机已有的。
+#### 克隆github仓库到本地
+克隆下来之后，进入到下载后的文件夹中，比如我的项目名叫做blogs，就cd blogs
+```
+$ git clone [your url]
+$ cd [your repository's name]
+```
+
+#### 安装hexo
+
+
+剪切走之后：
+```
+$ npm install hexo --save
+```
+等待一会就装好了。
+
+由于我们希望使用git方式提交到github，所以还需要下载hexo往git上提交的一个模块
+```
+$ npm install hexo-deployer-git
+```
+
+在初始化hexo之前，首先进入到刚刚Git克隆下来的目录里面，把里面的隐藏文件`.git`文件剪切到其他地方去备用，（原因：hexo在初始化的时候需要一个没有`.git`文件的文件夹，他本身在init过程中会生成一个`.git`文件，最后再删除掉。)
+
+执行：
+```
+$ hexo init
+```
+
+安装完成后：
+![hexo目录结构](/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github4.png)
+
+可能*.log *.json的文件会没有，这些都没有关系，后面会生成。到此为止，环境就搭建好了。可以进行本地测试了。
+
+### 第三步 测试hexo环境
+
+在博客的文件夹内部打开命令行工具，可以是cmd/powershell/git bash，执行：
+```
+$ hexo s -p [your port] #比如我的是hexo s -p 5000
+```
+*其实这里可以不加-p 和后面的5000来指定端口，但是我本地出现了端口冲突，特征是发布成功，命令行显示正常，但是浏览器访问时候一直转圈圈无法获得反馈。搞了半天才弄好，因为java平台下，服务器如果使用的端口被占用根本无法正常启动，并且会抛出addr blind之类的异常信息。*
+
+命令行反馈：
+![hexo测试](/blogs/2017/11/15/基于github-pages使用hexo搭建个人博客/github5.png)
+
+此时使用浏览器访问：`http://localhost:5000/blogs/` 就可以了。
+
+此时如果现实正常的博客页面就说明可以了。
+
+# 平时的使用方式
