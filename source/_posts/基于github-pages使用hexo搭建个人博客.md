@@ -256,4 +256,4 @@ deploy:
 6. `$ npm install hexo-deployer-git`
 7. 开始编写吧
 
-**注意事项：一定不要执行`hexo init指令`，上面执行的指令目的是安装好hexo需要的依赖，并不是要重复搭建环境时的步骤**
+{% note danger %}一定不要执行`hexo init指令`，上面执行的指令目的是安装好hexo需要的依赖，并不是要重复搭建环境时的步骤{% endnote %}
