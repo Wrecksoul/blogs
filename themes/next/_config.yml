@@ -148,7 +148,8 @@ social_icons:
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.gif
 # in site  directory(source/uploads): /uploads/avatar.gif
-avatar: /images/head.jpg
+avatar: http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg
+#avatar: /images/head.jpg
 
 # Table Of Contents in the Sidebar
 toc:
