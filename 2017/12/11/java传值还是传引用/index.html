@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blogs/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blogs/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blogs/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blogs/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blogs/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/blogs/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="序经典名言：  O’Reilly’s Java in a Nutshell by David Flanagan puts it best:“Java manipulates objects ‘by reference,’ but it passes object references to methods ‘by value.’”  翻译：O’Reilly出版的Java in a Nutshell">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java传值还是传引用">
+<meta property="og:url" content="https://wrecksoul.github.io/blogs/2017/12/11/java传值还是传引用/index.html">
+<meta property="og:site_name" content="Walker&#39;s blogs">
+<meta property="og:description" content="序经典名言：  O’Reilly’s Java in a Nutshell by David Flanagan puts it best:“Java manipulates objects ‘by reference,’ but it passes object references to methods ‘by value.’”  翻译：O’Reilly出版的Java in a Nutshell">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BC%A0%E9%80%92.png">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BC%A0%E9%80%92.png">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E4%BC%A0%E9%80%92.png">
+<meta property="og:updated_time" content="2017-12-11T04:02:24.109Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java传值还是传引用">
+<meta name="twitter:description" content="序经典名言：  O’Reilly’s Java in a Nutshell by David Flanagan puts it best:“Java manipulates objects ‘by reference,’ but it passes object references to methods ‘by value.’”  翻译：O’Reilly出版的Java in a Nutshell">
+<meta name="twitter:image" content="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BC%A0%E9%80%92.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blogs/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wrecksoul.github.io/blogs/2017/12/11/java传值还是传引用/"/>
+
+
+
+
+
+  <title>java传值还是传引用 | Walker's blogs</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blogs/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Walker's blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blogs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blogs/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blogs/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blogs/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blogs/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/12/11/java传值还是传引用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Walker">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blogs/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Walker's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java传值还是传引用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T11:59:48+08:00">
+                2017-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blogs/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p><strong>经典名言：</strong></p>
+<blockquote>
+<p>O’Reilly’s Java in a Nutshell by David Flanagan puts it best:<br>“Java manipulates objects ‘by reference,’ but it passes object references to methods ‘by value.’”</p>
+</blockquote>
+<p><em>翻译：O’Reilly出版的Java in a Nutshell的作者David Flanagan说：java通过引用操作对象，但是在java中，向方法传递引用时传递的是（引用的）值</em></p>
+<p>这个老生常谈的问题到了2017年其实没必要提出来了，但是竟然有人说这种说法是<strong>故弄玄虚</strong>。今天就分析一下到底是不是故弄玄虚。<br><a id="more"></a></p>
+<h2 id="直接上图"><a href="#直接上图" class="headerlink" title="直接上图"></a>直接上图</h2><h3 id="基础类型"><a href="#基础类型" class="headerlink" title="基础类型"></a>基础类型</h3><p><img src="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BC%A0%E9%80%92.png" alt=""><br>如上图所示，基础类型在函数传参时是值传递的，<code>i</code>的值是1，方法获取的参数是形参<code>i&#39;</code>改动<code>i&#39;</code>，不会对<code>i</code>造成任何影响。</p>
+<p>虽然基础类型的传递没什么疑问（一准是值传递），为了完整起见还是提一下。</p>
+<h3 id="可变对象引用"><a href="#可变对象引用" class="headerlink" title="可变对象引用"></a>可变对象引用</h3><p><img src="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BC%A0%E9%80%92.png" alt=""><br>如上图所示，引用<code>o</code>传入方法后，形参是<code>o&#39;</code>。</p>
+<p>对于第一种改动：<br>对象<code>obj11</code>在方法指向期间就拥有了两个入口都可以对它操作，并且两个引用的改动是互相可见互相影响的。</p>
+<p>对于第二种改动：<br>引用<code>o&#39;</code>只要不是final类型，就可以改动引用的指向。改动了o’的指向后，方法运行期间，用户可以通过o’获取<code>obj12</code>的内容，而不再是<code>obj11</code>，但是这种改动不会影响到<code>obj11</code>。</p>
+<h3 id="不可变对象引用"><a href="#不可变对象引用" class="headerlink" title="不可变对象引用"></a>不可变对象引用</h3><p><img src="http://ozhp30d7a.bkt.clouddn.com/image/java%E4%BC%A0%E5%80%BC%E8%BF%98%E6%98%AF%E4%BC%A0%E5%BC%95%E7%94%A8/%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E4%BC%A0%E9%80%92.png" alt=""></p>
+<p>如上图所示，引用<code>o</code>传入方法后，形参是<code>o&#39;</code>。</p>
+<p>对不可变对象作出修改时，类似于<code>可变对象引用</code>中的第二种改动，用户需要改动不可变对象时，由于对象不可变，改动后的对象其实是一个新的对象，就像图上话的那样，想把<code>obj21</code>的内容变化成2222，<code>obj21</code>不会改变，而是生成了新的、一个内容是2222的<code>obj22</code>，并且引用<code>o&#39;</code>指向了新的对象。这种改动也不会影响到原始的引用<code>o</code>。</p>
+<h2 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringBufferDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String s1 = <span class="string">"hello"</span>;</span><br><span class="line">        String s2 = <span class="string">"world"</span>;</span><br><span class="line">        System.out.println(s1 + <span class="string">"---"</span> + s2);<span class="comment">// hello---world</span></span><br><span class="line">        change(s1, s2);</span><br><span class="line">        System.out.println(s1 + <span class="string">"---"</span> + s2);<span class="comment">// hello---world</span></span><br><span class="line"></span><br><span class="line">        StringBuffer sb1 = <span class="keyword">new</span> StringBuffer(<span class="string">"hello"</span>);</span><br><span class="line">        StringBuffer sb2 = <span class="keyword">new</span> StringBuffer(<span class="string">"world"</span>);</span><br><span class="line">        System.out.println(sb1 + <span class="string">"---"</span> + sb2);<span class="comment">// hello---world</span></span><br><span class="line">        change(sb1, sb2);</span><br><span class="line">        System.out.println(sb1 + <span class="string">"---"</span> + sb2);<span class="comment">// hello---worldworld</span></span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(StringBuffer sb1, StringBuffer sb2)</span> </span>&#123;</span><br><span class="line">        sb1 = sb2;</span><br><span class="line">        sb2.append(sb1);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">(String s1, String s2)</span> </span>&#123;</span><br><span class="line">        s1 = s2;</span><br><span class="line">        s2 = s1 + s2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的例子有StringBuffer和String两种，先看StringBuffer，这是一个普通的可变对象，显然在<code>change</code>方法改变了sb1的指向，让它指向了一个sb2指向的对象，但是并没有对之前的对象造成任何影响。而<code>sb2.append(sb1)</code>改变了sb2的内容。<br>其实只看这一个例子就能看出来，为什么sb1没有变化呢？如果按照传引用的话，引用的指向被改动了，那么在函数调用之前的应用也应该被改动了指向才对，然而并没有。也就是说，引用在被传递的时候，也是把引用的值传过去了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O&apos;Reilly&apos;s Java in a Nutshell by David Flanagan (see Resources) puts it best: &quot;Java manipulates objects &apos;by reference,&apos; but it passes object references to methods &apos;by value.&apos;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>再看String的那个例子，<code>s2 = s1 + s2;</code>这个赋值语句其实是改动了s2的指向，s1+s2产生了一个新的对象赋值给s2这个引用，这个赋值也只是作用于函数内部的这个s2引用的复制而已。</p>
+<h2 id="容易混淆的一点"><a href="#容易混淆的一点" class="headerlink" title="容易混淆的一点"></a>容易混淆的一点</h2><p>很多人看了一些文章之后理解了，但是后来在使用的时候又开始产生疑问。我的总结：没有弄清<strong>“传值还是传引用”</strong>这个问题提出时的上下文——<strong>函数调用</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImmuableTest</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Integer a = <span class="number">10000</span>;</span><br><span class="line">	<span class="keyword">private</span> Object o = <span class="keyword">null</span>;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setA</span><span class="params">()</span></span>&#123;</span><br><span class="line">		a = <span class="number">9999</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setO</span><span class="params">()</span></span>&#123;</span><br><span class="line">		o = <span class="keyword">new</span> Object();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这种情况不需要考虑传值还是传引用，因为<code>setA()</code>和<code>setO()</code>使用的就是原始引用，根本没有引用的传递！！</p>
+<p>是的，在java中，如果你想让一个方法拿到原始的引用，而不是一个原始引用的复制品的话，那你就只能通过这种使用类的成员变量的方式，而不能通过函数传值。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
+<li><p>java函数传参——只会传值，即使你想传递的是引用，那也是传递的引用的值。</p>
+</li>
+<li><p>这种说法不是矫情，如果不这么理解的话，对于不可变对象的理解会出问题。</p>
+</li>
+</ol>
+<h2 id="太多弯弯绕？"><a href="#太多弯弯绕？" class="headerlink" title="太多弯弯绕？"></a>太多弯弯绕？</h2><p>总结：<br><del>传基础类型和不可变对象时，方法内部的改动不会改变源</del><br><del>传递可变对象引用时，方法内部的改动会改变源</del><br>虽然说法是对的但是很不推荐这种记忆方式。</p>
+<p>况且不可变对象也并非完全不可变，比如可以通过反射的方式修改String类型的对象内部保存的数组这种达到改变所谓的不可变的对象。</p>
+<p>常见的产生不可变对象的类有：<br>String，Number的子类Integer、Long、Double、Float、Boolean、Short、Byte、BigDecimal、BigInteger。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blogs/2017/12/07/我的角度看Unix IO模型/" rel="next" title="我的角度看Unix IO模型">
+                <i class="fa fa-chevron-left"></i> 我的角度看Unix IO模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/blogs/images/head.jpg"
+                alt="Walker" />
+            
+              <p class="site-author-name" itemprop="name">Walker</p>
+              <p class="site-description motion-element" itemprop="description">To be or not to be that's a question</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blogs/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blogs/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blogs/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序"><span class="nav-number">1.</span> <span class="nav-text">序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接上图"><span class="nav-number">2.</span> <span class="nav-text">直接上图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础类型"><span class="nav-number">2.1.</span> <span class="nav-text">基础类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变对象引用"><span class="nav-number">2.2.</span> <span class="nav-text">可变对象引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可变对象引用"><span class="nav-number">2.3.</span> <span class="nav-text">不可变对象引用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上代码"><span class="nav-number">3.</span> <span class="nav-text">上代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容易混淆的一点"><span class="nav-number">4.</span> <span class="nav-text">容易混淆的一点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">5.</span> <span class="nav-text">结论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#太多弯弯绕？"><span class="nav-number">6.</span> <span class="nav-text">太多弯弯绕？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walker</span>
+
+  
+</div>
+
+
+  <!--<div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blogs/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/blogs/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/blogs/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blogs/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/blogs/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
