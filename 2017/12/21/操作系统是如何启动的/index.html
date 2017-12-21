@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -79,16 +79,23 @@
 
 
 
-<meta name="description" content="To be or not to be that&apos;s a question">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Walker&#39;s blogs">
-<meta property="og:url" content="https://wrecksoul.github.io/blogs/index.html">
+<meta name="description" content="开机启动？由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。 此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统是如何启动的">
+<meta property="og:url" content="https://wrecksoul.github.io/blogs/2017/12/21/操作系统是如何启动的/index.html">
 <meta property="og:site_name" content="Walker&#39;s blogs">
-<meta property="og:description" content="To be or not to be that&apos;s a question">
+<meta property="og:description" content="开机启动？由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。 此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://image.beekka.com/blog/201302/bg2013021504.jpg">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/MBRfenqu.png">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/mbr_boot_sector.gif">
+<meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/loader_menu.gif">
+<meta property="og:updated_time" content="2017-12-21T09:12:35.489Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Walker&#39;s blogs">
-<meta name="twitter:description" content="To be or not to be that&apos;s a question">
+<meta name="twitter:title" content="操作系统是如何启动的">
+<meta name="twitter:description" content="开机启动？由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。 此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动">
+<meta name="twitter:image" content="http://image.beekka.com/blog/201302/bg2013021504.jpg">
 
 
 
@@ -118,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://wrecksoul.github.io/blogs/"/>
+  <link rel="canonical" href="https://wrecksoul.github.io/blogs/2017/12/21/操作系统是如何启动的/"/>
 
 
 
 
 
-  <title>Walker's blogs</title>
+  <title>操作系统是如何启动的 | Walker's blogs</title>
   
 
 
@@ -143,8 +150,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -247,9 +253,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -279,9 +285,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blogs/2017/12/21/操作系统是如何启动的/" itemprop="url">操作系统是如何启动的</a></h1>
+          <h1 class="post-title" itemprop="name headline">操作系统是如何启动的</h1>
         
 
         <div class="post-meta">
@@ -353,9 +357,7 @@
       
 
       
-        
-          
-            <h2 id="开机启动？"><a href="#开机启动？" class="headerlink" title="开机启动？"></a>开机启动？</h2><p>由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。</p>
+        <h2 id="开机启动？"><a href="#开机启动？" class="headerlink" title="开机启动？"></a>开机启动？</h2><p>由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。</p>
 <p>此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动之后才能做。这个有点矛盾的过程导致了开机的英文不是power on 不是 start up 而是bootstrap，简称boot。</p>
 <h2 id="bootstrap"><a href="#bootstrap" class="headerlink" title="bootstrap"></a>bootstrap</h2><blockquote>
 <p>启动的英文是bootstrap，来源于”pull oneself up by one’s bootstraps”这句谚语。<br>字面意思是”拽着鞋带把自己拉起来”，这当然是不可能的事情。</p>
@@ -419,8 +421,6 @@
 <p><em>我之前装LINUX和WIN双系统就各种不懂，而且WIN10更新还让LINUX启动不了。虽然我感觉我想弄清这部分内容即有硬件有软件，还有点底层，但是我又没什么耐心弄清所有的技术细节，我就想啊，难道就没人从一个宏观的角度通俗易懂把计算机启动操作系统这回事给我说一说吗？看了一下文章感觉写的不是很全面总是云里雾里的，当然了可能是我理解能力不够啦，于是我开始看各种操作系统有关的书籍。所以我想自己弄懂它，然后用自己的话描述出来。所有才有了这一段不知所云的话。</em></p>
 <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>现在还有UEFI和GPT这两种新的跟启动相关的东西，具体我还没有看，等弄懂了得空再加再补充一下。</p>
 
-          
-        
       
     </div>
     
@@ -435,322 +435,36 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/12/11/java传值还是传引用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Walker">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Walker's blogs">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blogs/2017/12/11/java传值还是传引用/" itemprop="url">java传值还是传引用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T11:59:48+08:00">
-                2017-12-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blogs/categories/java基础/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/blogs/tags/操作系统/" rel="tag"><i class="fa fa-tag"></i> 操作系统</a>
           
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          <h2 id="序"><a href="#序" class="headerlink" title="序"></a>序</h2><p><strong>经典名言：</strong></p>
-<blockquote>
-<p>O’Reilly’s Java in a Nutshell by David Flanagan puts it best:<br>“Java manipulates objects ‘by reference,’ but it passes object references to methods ‘by value.’”</p>
-</blockquote>
-<p><em>翻译：O’Reilly出版的Java in a Nutshell的作者David Flanagan说：java通过引用操作对象，但是在java中，向方法传递引用时传递的是（引用的）值</em></p>
-<p>这个老生常谈的问题到了2017年其实没必要提出来了，但是竟然有人说这种说法是<strong>故弄玄虚</strong>。今天就分析一下到底是不是故弄玄虚。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blogs/2017/12/11/java传值还是传引用/" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blogs/2017/12/11/java传值还是传引用/" rel="next" title="java传值还是传引用">
+                <i class="fa fa-chevron-left"></i> java传值还是传引用
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/12/07/我的角度看Unix IO模型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Walker">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Walker's blogs">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blogs/2017/12/07/我的角度看Unix IO模型/" itemprop="url">我的角度看Unix IO模型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-07T09:27:57+08:00">
-                2017-12-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blogs/categories/I-O/" itemprop="url" rel="index">
-                    <span itemprop="name">I/O</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h1 id="关于Unix-I-O模型的理解"><a href="#关于Unix-I-O模型的理解" class="headerlink" title="关于Unix I/O模型的理解"></a>关于Unix I/O模型的理解</h1><blockquote>
-<p>《Unix网络编程 卷一》：<br>POSIX把这两个术语定义如下：</p>
-<ul>
-<li>同步I/O操作（synchronous I/O Operation）导致请求进程阻塞，直到I/O操作完成；</li>
-<li>异步I/O操作（asynchronous I/O Operation）不导致请求进程阻塞。</li>
-</ul>
-</blockquote>
-<p>在我看来这只是一个关于I/O的书面定义，生活工作中人们所说的同步和异步跟I/O并不一定相关，就算I/O相关跟这个定义的差别也可能很大。</p>
-<h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><blockquote>
-<p>在电脑中，系统调用（英语：system call），又称为系统呼叫，指运行在使用者空间的程序向操作系统内核请求需要更高权限运行的服务。系统调用提供用户程序与操作系统之间的接口。大多数系统交互式操作需求在内核态执行。如设备IO操作或者进程间通信。</p>
-</blockquote>
-<p>以上是维基百科的定义。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blogs/2017/12/07/我的角度看Unix IO模型/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -760,163 +474,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2017/11/16/基于github-pages使用hexo搭建个人博客/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Walker">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Walker's blogs">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blogs/2017/11/16/基于github-pages使用hexo搭建个人博客/" itemprop="url">基于github-pages使用hexo搭建个人博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T17:10:58+08:00">
-                2017-11-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blogs/categories/杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>如果你在写博客的时候有以下困扰，可以试着自己搭建一个个人博客：</p>
-<ul>
-<li>各个网站的博客系统需要审核才能发布，有延迟，而且时间不一定；</li>
-<li>博客的样子不够个性；</li>
-<li>博客的栏目不是你想要的；</li>
-<li>博客中有各种无关广告和弹窗。</li>
-</ul>
-<p>由于我是一个后端开发人员，对前端技术并不了解，在搭建博客的过程中难免有许多不足之处，但是如果你也是后台开发并且对前端技术并不熟悉的情况下，我倒是觉得看这篇博文可能会更有感觉一些，我会从后台开发的角度解释一些步骤的原因，从而方便你具体问题具体分析。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/blogs/2017/11/16/基于github-pages使用hexo搭建个人博客/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -924,6 +486,8 @@
 
 
           
+  
+
 
         </div>
         
@@ -944,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1011,6 +584,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#开机启动？"><span class="nav-number">1.</span> <span class="nav-text">开机启动？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bootstrap"><span class="nav-number">2.</span> <span class="nav-text">bootstrap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS加载MBR"><span class="nav-number">3.</span> <span class="nav-text">BIOS加载MBR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boot-的-Loader"><span class="nav-number">4.</span> <span class="nav-text">Boot 的 Loader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MBR"><span class="nav-number">4.1.</span> <span class="nav-text">MBR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多系统"><span class="nav-number">4.2.</span> <span class="nav-text">多系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不知道我在说啥"><span class="nav-number">6.</span> <span class="nav-text">不知道我在说啥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">7.</span> <span class="nav-text">题外话</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1144,6 +733,10 @@
 
 
   
+  <script type="text/javascript" src="/blogs/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/blogs/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
