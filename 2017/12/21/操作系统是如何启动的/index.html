@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/MBRfenqu.png">
 <meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/mbr_boot_sector.gif">
 <meta property="og:image" content="http://ozhp30d7a.bkt.clouddn.com/image/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%A6%82%E6%9E%9C%E5%90%AF%E5%8A%A8%E7%9A%84/loader_menu.gif">
-<meta property="og:updated_time" content="2017-12-21T09:12:35.489Z">
+<meta property="og:updated_time" content="2017-12-21T09:16:02.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="操作系统是如何启动的">
 <meta name="twitter:description" content="开机启动？由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。 此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动">
@@ -359,6 +359,7 @@
       
         <h2 id="开机启动？"><a href="#开机启动？" class="headerlink" title="开机启动？"></a>开机启动？</h2><p>由于内存无法在不通电的时候是无法保持数据的，所以开机的时候内存是空的，CPU自身也不能存储数据，在这个盘古开天辟地混沌初开的时候，还没操作系统什么事儿呢，因为操作系统的程序在磁盘中，还没有加载到内存呢，CPU也就没法执行它。CPU就是空有一身力气但是没处使啊。</p>
 <p>此时一个非常矛盾的情况是，如果操作系统想运行的话，就需要把操作系统的代码加载到内存中，但是想把程序加载到内存中则需要操作系统启动之后才能做。这个有点矛盾的过程导致了开机的英文不是power on 不是 start up 而是bootstrap，简称boot。</p>
+<a id="more"></a>
 <h2 id="bootstrap"><a href="#bootstrap" class="headerlink" title="bootstrap"></a>bootstrap</h2><blockquote>
 <p>启动的英文是bootstrap，来源于”pull oneself up by one’s bootstraps”这句谚语。<br>字面意思是”拽着鞋带把自己拉起来”，这当然是不可能的事情。</p>
 <p>最早的时候，工程师们用它来比喻，计算机启动是一个很矛盾的过程：必须先运行程序，然后计算机才能启动，但是计算机不启动就无法运行程序！<br>早期真的是这样，必须想尽各种办法，把一小段程序装进内存，然后计算机才能正常运行。所以，工程师们把这个过程叫做”拉鞋带”，久而久之就简称为boot了。</p>
