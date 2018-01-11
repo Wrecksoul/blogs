@@ -262,7 +262,7 @@ AQS类是一个框架，它只提供了一些同步的阻塞、排队机制，�
 
 既然这个整型数字如此重要，所以最后提到一句“Subclasses can maintain other state fields, but only the atomically updated int value manipulated using methods getState(), setState(int) and compareAndSetState(int, int) is tracked with respect to synchronization.” 子类在具体实现的时候可以自行维护状态，但是由于AQS里面提供了排队、阻塞的逻辑代码，而这些代码的依据就是那个核心整型数字，而这个核心整型数字的get和set只能使用`getState(), setState(int) and compareAndSetState(int, int)`这三个方法来操作。所以，只有这三个方法设定和获取的状态值才是同步的。
 
-<div class="note warning"><p>简单点说就是如果你自行定义一个同步类，而且你使用AQS作为基类，你可以自行维护一个自定义的状态值，但是这个状态值由于AQS不知道，所有请你自己去实现它的同步吧。再简单点说就是别整那些幺蛾子，要是整的话自己写代码去吧AQS不是万能的。</p></div>
+<div class="note warning"><p>简单点说就是如果你自行定义一个同步类，而且你使用AQS作为基类，这样是允许的，但是这个状态值由于AQS不知道，所有请你自己去实现它的同步吧。再简单点说就是别整那些幺蛾子，要是整的话自己写代码去吧AQS不是万能的。</p></div>
 
 ### 子类如何利用AQS
 
@@ -301,6 +301,53 @@ AQS类是一个框架，它只提供了一些同步的阻塞、排队机制，�
 > Serialization of this class stores only the underlying atomic integer maintaining state, so deserialized objects have empty thread queues. Typical subclasses requiring serializability will define a readObject method that restores this to a known initial state upon deserialization.
 
 序列化方面的问题（一般JAVA官方API的注释最后一段都会提到这个），序列化时只会存储维护状态的基础原子整数，而线程队列不会被存储（其实存储也没用啊，因为线程的信息是不同的OS无法相同的，就算同一个OS不同时间也无法相同，就算相同了也没有实际意义）。如果子类有序列化的需求，需要重写 `readObject(ObjectInputStream)` 方法，该方法在反序列化时将此对象恢复到某个已知初始状态。这里我有一点不懂，序列化一个锁有什么用呢，是为了存储当前系统的运行状态，重启时恢复？
+
+### 还没完，AQS的排队机制
+
+排队机制由 `Node` 内部类来控制。
+
+> Wait queue node class. 
+
+> The wait queue is a variant of a "CLH" (Craig, Landin, and Hagersten) lock queue. CLH locks are normally used for spinlocks. We instead use them for blocking synchronizers, but use the same basic tactic of holding some of the control information about a thread in the predecessor of its node. A "status" field in each node keeps track of whether a thread should block. A node is signalled when its predecessor releases. Each node of the queue otherwise serves as a specific-notification-style monitor holding a single waiting thread. The status field does NOT control whether threads are granted locks etc though. A thread may try to acquire if it is first in the queue. But being first does not guarantee success; it only gives the right to contend. So the currently released contender thread may need to rewait. 
+
+这个内部类是CLH锁的队列的变种。CLH锁通常用于自旋锁，不过我们把它用在阻塞同步器上，但是我们使用了与CLH一样的特性——在前驱节点中保存线程的控制信息。在每一个节点中保持有一个“状态”字段，它代表线程是否应该阻塞。当前驱节点释放锁时它会通知后继节点。每一个节点充当一个监视器，并且与一个等待锁的线程相关联。“状态”字段**不**标示线程是否被赋予了锁。当一个线程处于队列的第一个时，它就会尝试去获取锁，但是不一定会成功，它只是有竞争锁的权利而已，所以它可能再次等待。
+
+> To enqueue into a CLH lock, you atomically splice it in as new tail. To dequeue, you just set the head field. 
+
+对CLH锁来说，入队的节点原子地被连接到尾巴上，对于出队的节点，则是头节点。（意思就是FIFO）
+```
+      +------+  prev +-----+       +-----+
+ head |      | <---- |     | <---- |     |  tail
+      +------+       +-----+       +-----+
+```
+> Insertion into a CLH queue requires only a single atomic operation on "tail", so there is a simple atomic point of demarcation from unqueued to queued. Similarly, dequeing involves only updating the "head". However, it takes a bit more work for nodes to determine who their successors are, in part to deal with possible cancellation due to timeouts and interrupts. 
+
+把一个节点入队到CLH队列中，只需要在tail上做一个原子操作，所以一个节点入队还是没有入队在于有没有进行原子操作。相似的，出队操作也只需要更新head就可以了。但是这需要做一点额外的工作——一个是需要判断谁是它的接班人，另外一个是需要处理超时和中断。
+
+> The "prev" links (not used in original CLH locks), are mainly needed to handle cancellation. If a node is cancelled, its successor is (normally) relinked to a non-cancelled predecessor. For explanation of similar mechanics in the case of spin locks, see the papers by Scott and Scherer at [http://www.cs.rochester.edu/u/scott/synchronization/](http://www.cs.rochester.edu/u/scott/synchronization/)
+
+Node类中的 `prev` 引用（在原始的CLH锁中没有使用，注意了，虽然上图画了prev，其实CLH锁的Node实现往往是不需要前驱节点的引用的，只需要tail引用就可以，所以这里才特别说明CLH没有使用），主要是用来处理取消操作的。如果一个节点被取消（指不再获取锁），它的下一节点会从新连接到一个没有被取消的前驱节点上。更多自旋锁的类似机制请看Scott和Scherer发布在资料请看[http://www.cs.rochester.edu/u/scott/synchronization/](http://www.cs.rochester.edu/u/scott/synchronization/)的文章。
+
+> We also use "next" links to implement blocking mechanics. The thread id for each node is kept in its own node, so a predecessor signals the next node to wake up by traversing next link to determine which thread it is. Determination of successor must avoid races with newly queued nodes to set the "next" fields of their predecessors. This is solved when necessary by checking backwards from the atomically updated "tail" when a node's successor appears to be null. (Or, said differently, the next-links are an optimization so that we don't usually need a backward scan.) 
+
+为了实现阻塞机制我们还使用了 `next` 引用。因为每个线程的id被保存在它的自己的节点上，所以前驱节点对应的线程想唤醒下一个节点的时候需要 `next` 引用知道唤醒哪个线程。决定谁是后继节点的时候必须避免新入队的节点的竞争，我们通过从tail开始向前遍历来找节点（这样只找到先前早就入队的，避免了新入队的节点竞争）的方式解决这个问题。（或者，这段话可以这样说， `next` 引用可以避免我们的遍历操作）。
+
+> Cancellation introduces some conservatism to the basic algorithms. Since we must poll for cancellation of other nodes, we can miss noticing whether a cancelled node is ahead or behind us. This is dealt with by always unparking successors upon cancellation, allowing them to stabilize on a new predecessor, unless we can identify an uncancelled predecessor who will carry this responsibility. 
+
+取消操作会给基础算法带来一些保守性。由于一个节点必须轮询其他节点是否取消了，所有可以会错过发现取消的节点是在本节点之前还是之后。这个问题一般这样解决，当本节点发生取消的时候不阻塞后继节点，允许它一直运行知道找到一个未取消的前驱节点。
+
+> CLH queues need a dummy header node to get started. But we don't create them on construction, because it would be wasted effort if there is never contention. Instead, the node is constructed and head and tail pointers are set upon first contention. 
+
+CLH锁队列需要一个假的头节点，而我们不建立假的头节点，因为如果根本没有锁竞争的话这样做会浪费资源。相反，在第一次发送锁竞争的时候才会创建Node，并设定head和tail引用。
+
+> Threads waiting on Conditions use the same nodes, but use an additional link. Conditions only need to link nodes in simple (non-concurrent) linked queues because they are only accessed when exclusively held. Upon await, a node is inserted into a condition queue. Upon signal, the node is transferred to the main queue. A special value of status field is used to mark which queue a node is on. 
+
+等待“条件”的线程跟等待锁的时候一样都使用同一个节点，但是我们会增加新的引用。“条件对象”只需要把节点们连接到简单队列（非线程安全的）中，因为他们只有在独占状态时才会被访问。等待条件的时候，一个节点被添加到条件队列中。条件满足的时候，节点被转移到锁队列中。有一个特殊的状态字段标记着节点处于哪种队列中。
+
+> Thanks go to Dave Dice, Mark Moir, Victor Luchangco, Bill Scherer and Michael Scott, along with members of JSR-166 expert group, for helpful ideas, discussions, and critiques on the design of this class.
+
+感谢父老乡亲。
+
 
 ## 总结
 
