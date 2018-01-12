@@ -262,6 +262,153 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2018/01/09/Java并发API_利用AQS实现锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Walker">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Walker's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blogs/2018/01/09/Java并发API_利用AQS实现锁/" itemprop="url">java并发个人总结——使用AQS实现简单锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-09T17:37:14+08:00">
+                2018-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blogs/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>理解j.u.c的突破口就是理解AQS，然而理解AQS必须从具体实现类入手，比如ReetrantLock，否则无从下手。但是ReetrantLock又有点复杂，所以不如自行实现了一个能多简单就多简单的类，依据呢，就是<a href="https://wrecksoul.github.io/blogs/2018/01/09/Java%E5%B9%B6%E5%8F%91API_locks/">java并发个人总结——locks API</a> 中AQS实现类的一些说明以及仿照ReetrantLock的源码。以后再从它入手一点点看AQS的源码。</p>
+<h2 id="实现一个简单锁"><a href="#实现一个简单锁" class="headerlink" title="实现一个简单锁"></a>实现一个简单锁</h2><p>废话少说，上代码：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blogs/2018/01/09/Java并发API_利用AQS实现锁/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2018/01/09/Java并发API_locks/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1055,7 +1202,7 @@
               
                 <a href="/blogs/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
