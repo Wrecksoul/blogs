@@ -948,13 +948,12 @@
       
         
           <h1 id="关于Unix-I-O模型的理解"><a href="#关于Unix-I-O模型的理解" class="headerlink" title="关于Unix I/O模型的理解"></a>关于Unix I/O模型的理解</h1><blockquote>
-<p>《Unix网络编程 卷一》：<br>POSIX把这两个术语定义如下：</p>
+<p>《Unix网络编程 卷一》：<br>POSIX规范把这两个术语定义如下：</p>
 <ul>
 <li>同步I/O操作（synchronous I/O Operation）导致请求进程阻塞，直到I/O操作完成；</li>
 <li>异步I/O操作（asynchronous I/O Operation）不导致请求进程阻塞。</li>
 </ul>
 </blockquote>
-<p>在我看来这只是一个关于I/O的书面定义，生活工作中人们所说的同步和异步跟I/O并不一定相关，就算I/O相关跟这个定义的差别也可能很大。</p>
 <h2 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h2><blockquote>
 <p>在电脑中，系统调用（英语：system call），又称为系统呼叫，指运行在使用者空间的程序向操作系统内核请求需要更高权限运行的服务。系统调用提供用户程序与操作系统之间的接口。大多数系统交互式操作需求在内核态执行。如设备IO操作或者进程间通信。</p>
 </blockquote>

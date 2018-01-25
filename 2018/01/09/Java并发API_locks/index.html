@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Walker&#39;s blogs">
 <meta property="og:description" content="前言本文对java 6/7 java.util.concurrent.locks的主要接口和抽象类的API进行不完全的翻译，写了一点个人理解，并且对API分了段落。 个人感觉在看那些网上的各种详解教程之前应该先读一下源码中的API注释，这有利于在理解各种同步类源码的时候能纵观全局统筹兼顾，起到窥一斑而知全貌的效果。毕竟Doug Lea才是最懂JUC包的人而他本人写的注释更是最正确的解释，所以看看A">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-11T09:42:21.912Z">
+<meta property="og:updated_time" content="2018-01-25T09:15:29.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java并发个人总结——locks API">
 <meta name="twitter:description" content="前言本文对java 6/7 java.util.concurrent.locks的主要接口和抽象类的API进行不完全的翻译，写了一点个人理解，并且对API分了段落。 个人感觉在看那些网上的各种详解教程之前应该先读一下源码中的API注释，这有利于在理解各种同步类源码的时候能纵观全局统筹兼顾，起到窥一斑而知全貌的效果。毕竟Doug Lea才是最懂JUC包的人而他本人写的注释更是最正确的解释，所以看看A">
@@ -567,7 +567,7 @@
 <p>继承AQS定义一个具有了Condition特性的类Sync，然后定义另外一个实现Lock接口的锁实现类，在锁实现类中持有一个Sync实例的引用，以代理模式的写法利用一个内部引用完成各种功能。</p>
 <div class="note warning"><p>为什么如此实现：锁往往有公平锁和非公平锁之分，往往一个锁实现类（比如ReetrantLock）其实内部存在两个锁实现，这两个实现分别是公平锁和非公平锁，同一时间只有一个有效，而控制这个的只是构造函数的一个boolean参数，这样使得API更加简洁易用。</p></div>
 
-<p><em>注1：什么是线程间的协调工作呢，线程之间虽然大多数情况下可以是并行的，但是某些情况下应业务需要必须保证有序执行，比如分库分表的查询最后的汇总线程必须等待所有查询线程都结束才能执行，类似于这种的业务需求导致我们需要线程之间互相协调。这就不同于普通的互斥锁</em></p>
+<p><em>注1：什么是线程间的协调工作呢，线程之间虽然大多数情况下可以是并行的，但是某些情况下应业务需要必须保证有序执行，比如分库分表的查询最后的汇总线程必须等待所有查询线程都结束才能执行，类似于这种的业务需求导致我们需要线程之间互相协调。而这就不同于普通的互斥锁，也不同于共享锁，而是一种特定条件，属于特定线程间的协调问题。</em></p>
 
       
     </div>

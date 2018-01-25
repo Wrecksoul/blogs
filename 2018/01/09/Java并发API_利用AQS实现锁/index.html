@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Walker&#39;s blogs">
 <meta property="og:description" content="理解j.u.c的突破口就是理解AQS，然而理解AQS必须从具体实现类入手，比如ReetrantLock，否则无从下手。但是ReetrantLock又有点复杂，所以不如自行实现了一个能多简单就多简单的类，依据呢，就是java并发个人总结——locks API 中AQS实现类的一些说明以及仿照ReetrantLock的源码。以后再从它入手一点点看AQS的源码。 实现一个简单锁废话少说，上代码：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-12T06:10:58.380Z">
+<meta property="og:updated_time" content="2018-01-25T09:14:05.879Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java并发个人总结——使用AQS实现简单锁">
 <meta name="twitter:description" content="理解j.u.c的突破口就是理解AQS，然而理解AQS必须从具体实现类入手，比如ReetrantLock，否则无从下手。但是ReetrantLock又有点复杂，所以不如自行实现了一个能多简单就多简单的类，依据呢，就是java并发个人总结——locks API 中AQS实现类的一些说明以及仿照ReetrantLock的源码。以后再从它入手一点点看AQS的源码。 实现一个简单锁废话少说，上代码：">
@@ -374,7 +374,7 @@
 <li>把主要的逻辑写在一个内部类 <code>Sync</code> 中，并且把 <code>Sync</code> 的方法都声明成final的防止被重写。</li>
 <li>然后MyLock实现Lock接口，利用内部类完成工作。</li>
 </ol>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在j.u.c.locks包中AQS以及几个接口的指导下，我只写了几十行代码顺利完成了一个简单的锁，这是AQS给我们提供的遍历。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>在j.u.c.locks包中AQS以及几个接口的指导下，我只写了几十行代码顺利完成了一个简单的锁，这是AQS给我们提供的遍历。当然了，这种级别的锁人家API本身就提供了，但是如果你有加丰富的需求也可以自行实现。</p>
 <p>MyLock类完全可以被称为锁，它继承了AQS的线程排队机制并且支持Condition协调线程，而且它还实现了Lock接口，但是它不支持重入，有死锁风险。</p>
 
       
