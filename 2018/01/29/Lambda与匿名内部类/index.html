@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/blogs/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/blogs/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/blogs/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blogs/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/blogs/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/blogs/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/blogs/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java8,函数式编程," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="java8加入的函数式编程一大主力之一——Lambda表达式。 java经常被人们诟病的一个问题就是啰嗦，表达能力欠佳。而Lambda表达式的加入可以一定程度的弥补这一缺陷。">
+<meta name="keywords" content="java8,函数式编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8——Lambda和匿名内部类">
+<meta property="og:url" content="https://wrecksoul.github.io/blogs/2018/01/29/Lambda与匿名内部类/index.html">
+<meta property="og:site_name" content="Walker&#39;s blogs">
+<meta property="og:description" content="java8加入的函数式编程一大主力之一——Lambda表达式。 java经常被人们诟病的一个问题就是啰嗦，表达能力欠佳。而Lambda表达式的加入可以一定程度的弥补这一缺陷。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-29T10:13:28.163Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java8——Lambda和匿名内部类">
+<meta name="twitter:description" content="java8加入的函数式编程一大主力之一——Lambda表达式。 java经常被人们诟病的一个问题就是啰嗦，表达能力欠佳。而Lambda表达式的加入可以一定程度的弥补这一缺陷。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blogs/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://wrecksoul.github.io/blogs/2018/01/29/Lambda与匿名内部类/"/>
+
+
+
+
+
+  <title>java8——Lambda和匿名内部类 | Walker's blogs</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/blogs/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Walker's blogs</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/blogs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/blogs/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/blogs/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/blogs/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/blogs/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://wrecksoul.github.io/blogs/blogs/2018/01/29/Lambda与匿名内部类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Walker">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Walker's blogs">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java8——Lambda和匿名内部类</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T14:27:23+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blogs/categories/java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java8加入的函数式编程一大主力之一——Lambda表达式。</p>
+<p>java经常被人们诟病的一个问题就是啰嗦，表达能力欠佳。而Lambda表达式的加入可以一定程度的弥补这一缺陷。<br><a id="more"></a></p>
+<h2 id="java啰嗦的地方"><a href="#java啰嗦的地方" class="headerlink" title="java啰嗦的地方"></a>java啰嗦的地方</h2><ol>
+<li>java中的方法是不可以独立存在的，必须在类或者接口中定义，这就使得java比较啰嗦，当我们仅仅需要定义一个方法时必须先定义一个类。</li>
+<li>java中不存在函数指针，所以函数无法被传递。</li>
+</ol>
+<p>js中可以这样写。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> al = <span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i&lt;<span class="number">100</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> bl = <span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> i==<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dealwithVal</span>(<span class="params">val,judge</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(judge(val))&#123;</span><br><span class="line">		<span class="comment">//dealwith..</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> val = <span class="number">100</span>;<span class="comment">//get from somewhere</span></span><br><span class="line">dealwithVal(val,cl);</span><br><span class="line">dealwithVal(val,al);</span><br><span class="line">dealwithVal(val,<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> a&gt;<span class="number">8</span>&amp;&amp;a&lt;<span class="number">100</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这实现了把行为参数化， <code>判断</code> 这个行为函数，被当做一个参数传递进入另一个函数，而且判断行为可以在使用时再具体传入，甚至可以临时定义一个传递进去，这样大量的减少了代码量，语言的表达能力大大提高。</p>
+<p>但是，java中真的不能把方法作为参数传递吗？答案是可以。</p>
+<p>对于上面的需求我们可以给出一个java版本的实现,方法就是利用接口。通常我们这样实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Judge</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JudgeWayA</span> <span class="keyword">implements</span> <span class="title">Judge</span>&lt;<span class="title">Integer</span>&gt;</span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Integer t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> t.compareTo(<span class="number">100</span>)&lt;<span class="number">0</span>;<span class="comment">//t&lt;100</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JudgeWayB</span> <span class="keyword">implements</span> <span class="title">Judge</span>&lt;<span class="title">Integer</span>&gt;</span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Integer t)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> t.compareTo(<span class="number">8</span>)&gt;<span class="number">0</span>;<span class="comment">//t&gt;8</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DealWith</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Judge judge;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">DealWith</span><span class="params">(Judge judge)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.judge = judge;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> val = <span class="number">100</span>; <span class="comment">//get from somewhere</span></span><br><span class="line">		<span class="keyword">new</span> DealWith(<span class="keyword">new</span> JudgeWayA()).deal(val);</span><br><span class="line">		<span class="keyword">new</span> DealWith(<span class="keyword">new</span> JudgeWayB()).deal(val);</span><br><span class="line">		<span class="keyword">new</span> DealWith(<span class="keyword">new</span> Judge&lt;Integer&gt;()&#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(Integer t)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">return</span> t.compareTo(<span class="number">8</span>) &gt; <span class="number">0</span> &amp;&amp; t.compareTo(<span class="number">100</span>) &lt; <span class="number">0</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;).deal(val);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deal</span><span class="params">(<span class="keyword">int</span> val)</span></span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(judge.test(val))&#123;</span><br><span class="line">			<span class="comment">//dealwith..</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="行为参数化"><a href="#行为参数化" class="headerlink" title="行为参数化"></a>行为参数化</h2><p>这是我们平时在设计模式中成为 <strong>策略模式</strong> 的一种编码模式，可以实现 <strong>行为</strong> 的变化。将变化的行为一定程度的固定下来，但是留有可以变化的余地，通过传递不同的实现达到需求变更时最小程度代码变更的目的。</p>
+<p>在java中，传递一个函数或者说传递一种行为，的方式是传递一个接口，面向接口编程其实是<strong>面向变化的行为</strong>编程，是将<strong>行为参数化</strong>的java实现方式。</p>
+<p>但是这种实现有点太麻烦了。很明显，相比于JS语言我们需要额外的定义一个方法签名及对应接口类、实现方法签名并声明对应类。</p>
+<p>虽然可以实现<strong>行为的参数化</strong>但是面向接口编程还是很啰嗦，而匿名内部类的使用进一步减少了接口的实现类的书写长度，但是仍然面临着不够简洁的问题。</p>
+<p>行为参数化可以利用接口和匿名内部类，但是使用起来比较麻烦，java8的Lamda表达式则进一步简化了书写方式。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ol>
+<li>java要实现行为参数化需要使用接口</li>
+<li>行为参数化最简洁的方式是匿名内部类</li>
+<li>匿名内部类还不够简洁</li>
+</ol>
+<h2 id="简写匿名内部类"><a href="#简写匿名内部类" class="headerlink" title="简写匿名内部类"></a>简写匿名内部类</h2><h3 id="是行为而不是声明"><a href="#是行为而不是声明" class="headerlink" title="是行为而不是声明"></a>是行为而不是声明</h3><p>上面的<code>Judge</code>接口，它只有一个方法，而<code>DealWith</code>这个类需要的就是一个行为，这个行为可以通过<code>Judge</code>接口里面的方法实现定义。换句话说，我们其实不关心在实现<code>Judge</code>这个接口时关于接口类型、方法返回值、方法参数等等声明，这些声明早已在接口中定义过了，我们只关心接口方法的实现的 <strong>逻辑</strong> 是什么，只要知道了方法逻辑，我们就可以让DealWith执行下去了，而接口的定义以及声明格式完全是为了让jvm认得我们书写的逻辑是属于哪个接口的，是jvm要求我们这样去写才带来的这许多麻烦。要是它能认出、推断出我们的代码就是实现的哪一个接口的，那我们就不要写那么多<strong>声明</strong>了。</p>
+<p>根据上面的代码逻辑，我们可以知道：</p>
+<ol>
+<li><strong>判断</strong> 这样一个行为，需要的是返回一个boolean返回值。</li>
+<li>判断的具体逻辑是什么并不确定。</li>
+<li>虽然具体逻辑不确定，但是判断时参数是确定的，就是一个整型值。</li>
+</ol>
+<p>其实上面这些问题，正是接口定义时定义的，既然接口已经定义了，我们还需要重复定义吗？比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JudgeWayA</span> <span class="keyword">implements</span> <span class="title">Judge</span></span>&#123;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> i&lt;<span class="number">100</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JudgeWayB</span> <span class="keyword">implements</span> <span class="title">Judge</span></span>&#123;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> i==<span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这属于重复定义，看看上面的代码，有效的只有<code>return i==0;</code>和<code>return i&lt;100;</code>这两句，其他的代码跟<code>Judge</code>里面的代码重复了。</p>
+<p>而匿名内部类省略了一小部分书写的代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Judge j= <span class="keyword">new</span> Judge()&#123;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> a&gt;<span class="number">8</span> &amp;&amp; a&lt;<span class="number">100</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">new</span> DealWith(j).deal();</span><br></pre></td></tr></table></figure></p>
+<p>但是还可以更简洁。</p>
+<h3 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h3><p>类似于菱形符号的加入：<code>List&lt;String&gt; l = new ArrayList&lt;&gt;();</code>java7引入了这种书写方式，这里使用了类型的自动推断。那么匿名内部类不也可以自动推断吗。</p>
+<p>当我们书写new DealWith(xxxx)的时候，编译器就应该知道，这里就是一个Judge类型的对象，因为我们已经定义了DealWith的单参构造方法：<code>public DealWith(Judge judge)</code>。</p>
+<p>所以，Lambda表达式完全可以看成是匿名内部类的一种类型推断。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Judge j = (<span class="keyword">int</span> a)-&gt; a&gt;<span class="number">8</span> &amp;&amp; a&lt;<span class="number">100</span>;</span><br><span class="line"><span class="keyword">new</span> DealWith(j).deal();</span><br></pre></td></tr></table></figure></p>
+<p>更进一步，因为参数的类型我们也定义过了干脆不写：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Judge j = (a)-&gt; a&gt;8 &amp;&amp; a&lt;100;</span><br><span class="line">new DealWith(j).deal();</span><br></pre></td></tr></table></figure></p>
+<p>或者直接写成：<code>new DealWith((a)-&gt; a&gt;8 &amp;&amp; a&lt;100).deal()</code></p>
+<h3 id="突出本质"><a href="#突出本质" class="headerlink" title="突出本质"></a>突出本质</h3><p>Lambda表达式的真谛就是突出本质，其实Lambda并没有那么特别，还是需要定义一个接口，接口限制为只能有一个方法，然后就可以将匿名函数改写成Lambda表达式了。</p>
+<p>特务接头的时候，双方一般需要互相确认，只有确认完毕后，才进行情报交换，比如：“地振高冈，一派青山千古秀。”这是让对方知道自己是天地会的，“门朝大海,三河合水万年流”，这是确认对方是天地会的。类比到java中就是接口声明了要使用某种参数，这是第一步，使用接口时再次声明参数的类型符合接口的要求，这是第二部。</p>
+<p>对于韦小宝来说，一旦对方说出前一句，那就可以了，根本不需要说后一句，效率高也省得麻烦。当然了这是有一定风险的，但是带来的好处是效率高。</p>
+<p>再比如，TCP连接是需要确认双方都可以收到消息的，相对来说比较慢，而UDP不需要确认，给个端口就发送数据，效率高。但是带来一定的丢失消息的风险。</p>
+<h3 id="风险和回报"><a href="#风险和回报" class="headerlink" title="风险和回报"></a>风险和回报</h3><p>就java来说，此处的风险是什么呢？就是两个函数式接口定义的方法、以及方法的调用处写了两种都写了，导致无法推断出到底是哪个接口的表达式。</p>
+<p>比如我们上面的<code>Judge</code>接口定义的跟java8提供的<code>Predicate</code>抽象方法签名一样，那我们的方法就会有点问题了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Predicate</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">test</span><span class="params">(T t)</span></span>;</span><br><span class="line">	<span class="comment">//...还有很多default方法..省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上图我们的定义时一样的。如果<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DealWith</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Judge&lt;Integer&gt; judge;</span><br><span class="line">	<span class="keyword">private</span> Predicate&lt;Integer&gt; predicate;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Func</span><span class="params">(Judge&lt;Integer&gt; judge)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.judge = judge;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Func</span><span class="params">(Predicate&lt;Integer&gt; predicate)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.predicate = predicate;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//...省略</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那么此时，<code>new DealWith((a)-&gt; a&gt;8 &amp;&amp; a&lt;100).deal()</code>就会报错，因为此时产生了歧义——<code>The constructor Func(Judge&lt;Integer&gt;) is ambiguous</code></p>
+<p><strong>但是</strong>，这又有什么关系呢？如果一个方法签名是一样的，那效果就会一模一样，我们只需要去掉一个就可以了。</p>
+<p>可以说如此做法带来的回报远远高于风险。</p>
+<h3 id="java8的改造"><a href="#java8的改造" class="headerlink" title="java8的改造"></a>java8的改造</h3><p>一直都存在于java中的接口们可以在java8中重整旗鼓再焕发一次了，比如Runnable接口只有一个抽象方法，符合函数式接口的要求。所以以前我们这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"hello"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Lambda的表达方式是：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread( ()-&gt;System.out.println(<span class="string">"hello"</span>) );</span><br></pre></td></tr></table></figure></p>
+<p>这样不仅实现了简洁，如果我们熟悉了这种写法之后，代码的可读性也会提高。</p>
+<h2 id="Lambda不是匿名内部类的简写"><a href="#Lambda不是匿名内部类的简写" class="headerlink" title="Lambda不是匿名内部类的简写"></a>Lambda不是匿名内部类的简写</h2><p>看上去Lambda表达式就是匿名内部类的简写，可以替代匿名内部类，其实不是：</p>
+<ol>
+<li>Lambda只能代表重写一个接口方法的匿名内部类；</li>
+<li>Lambda表达式的jvm执行方式与匿名内部类不同。</li>
+</ol>
+<p>如果你使用匿名内部类，其实只是没有书写一个类的名字而已，与一般的内部类一样，编译时会生成一个额外的class文件，而Lambda表达式则不会产生额外的class文件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainLambda</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"Lambda Thread run()"</span>)).start();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反编译之后我们发现Lambda表达式被封装成了主类的一个私有方法，并通过invokedynamic指令进行调用(参考：<a href="https://github.com/CarpenterLee/JavaLambdaInternals/blob/master/2-Lambda%20and%20Anonymous%20Classes(II).md" target="_blank" rel="external">https://github.com/CarpenterLee/JavaLambdaInternals/blob/master/2-Lambda%20and%20Anonymous%20Classes(II).md</a>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// javap -c -p MainLambda.class</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainLambda</span> </span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       0: new           #2                  // class java/lang/Thread</span><br><span class="line">       <span class="number">3</span>: dup</span><br><span class="line">       4: invokedynamic #3,  0              // InvokeDynamic #0:run:()Ljava/lang/Runnable; /*使用invokedynamic指令调用*/</span><br><span class="line">       9: invokespecial #4                  // Method java/lang/Thread."&lt;init&gt;":(Ljava/lang/Runnable;)V</span><br><span class="line">      12: invokevirtual #5                  // Method java/lang/Thread.start:()V</span><br><span class="line">      <span class="number">15</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> lambda$main$<span class="number">0</span>();  <span class="comment">/*Lambda表达式被封装成主类的私有方法*/</span></span><br><span class="line">    Code:</span><br><span class="line">       0: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">       3: ldc           #7                  // String Lambda Thread run()</span><br><span class="line">       5: invokevirtual #8                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">       <span class="number">8</span>: <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="this引用的意义"><a href="#this引用的意义" class="headerlink" title="this引用的意义"></a>this引用的意义</h2><p>既然Lambda表达式不是内部类的简写，那么Lambda内部的this引用也就跟内部类对象没什么关系了。在Lambda表达式中this的意义跟在表达式外部完全一样。因此下列代码输，而不是两个引用地址。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> Main().deal();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">deal</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		Runnable r1 = () -&gt; &#123; System.out.println(<span class="keyword">this</span>); &#125;;</span><br><span class="line">		Runnable r2 = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				System.out.println(<span class="keyword">this</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="string">"Hello Runnable"</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		r1.run();</span><br><span class="line">		r2.run();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="string">"Hello Lambda"</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<blockquote>
+<p>Hello Lambda<br>Hello Runnable</p>
+</blockquote>
+<p>r1没有输出引用地址，因为它不是一个类，而属于Main的私有方法，所以this指向的是Main的实例，而Main的toString输出<code>Hello Lambda</code></p>
+<p>r2输出<code>Hello Runnable</code>，因为它自己是一个类，this指向匿名内部类的实例。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/blogs/tags/java8/" rel="tag"><i class="fa fa-tag"></i> java8</a>
+          
+            <a href="/blogs/tags/函数式编程/" rel="tag"><i class="fa fa-tag"></i> 函数式编程</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blogs/2018/01/09/Java并发API_利用AQS实现锁/" rel="next" title="java并发个人总结——使用AQS实现简单锁">
+                <i class="fa fa-chevron-left"></i> java并发个人总结——使用AQS实现简单锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://ozhp30d7a.bkt.clouddn.com/index/header/shadowmoon-valley-1366x768.jpg"
+                alt="Walker" />
+            
+              <p class="site-author-name" itemprop="name">Walker</p>
+              <p class="site-description motion-element" itemprop="description">To be or not to be that's a question</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/blogs/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/blogs/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/blogs/tags/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java啰嗦的地方"><span class="nav-number">1.</span> <span class="nav-text">java啰嗦的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行为参数化"><span class="nav-number">2.</span> <span class="nav-text">行为参数化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简写匿名内部类"><span class="nav-number">4.</span> <span class="nav-text">简写匿名内部类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是行为而不是声明"><span class="nav-number">4.1.</span> <span class="nav-text">是行为而不是声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型推断"><span class="nav-number">4.2.</span> <span class="nav-text">类型推断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#突出本质"><span class="nav-number">4.3.</span> <span class="nav-text">突出本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#风险和回报"><span class="nav-number">4.4.</span> <span class="nav-text">风险和回报</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java8的改造"><span class="nav-number">4.5.</span> <span class="nav-text">java8的改造</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lambda不是匿名内部类的简写"><span class="nav-number">5.</span> <span class="nav-text">Lambda不是匿名内部类的简写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#this引用的意义"><span class="nav-number">6.</span> <span class="nav-text">this引用的意义</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2015 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Walker</span>
+
+  
+</div>
+
+
+  <!--<div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/blogs/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/blogs/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/blogs/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/blogs/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/blogs/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/blogs/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/blogs/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
